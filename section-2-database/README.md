@@ -31,6 +31,7 @@ the rationale for intentionally omitting `dim_date`.
 | `sql/02_load_successful_members.sql` | Loads Section 1 successful applications into the reference table and member dimension. |
 | `sql/03_analyst_queries.sql` | Defines the two requested analyst queries. |
 | `sql/04_load_mock_sales_data.sql` | Loads the local product and sales-line fixtures during fresh database initialization. |
+| `sql/05_analytics_views.sql` | Creates the read-only sales/member views intended for analysts. |
 
 ## Run locally
 
@@ -63,6 +64,19 @@ docker compose -f section-2-database/docker-compose.yml exec -T analytics-db \
 
 Only `completed` orders contribute to spending and purchase-frequency results;
 cancelled and in-progress orders are excluded.
+
+## Analytics views
+
+Analytics should be granted `SELECT` on these views—not on the underlying
+tables:
+
+| View | Purpose |
+| --- | --- |
+| `analytics.v_analytics_sales_membership` | Sales-line analysis with product, order status, and non-sensitive membership attributes. |
+| `analytics.v_analytics_member_sales_summary` | One row per member with total and completed-order measures. |
+
+Both views omit member email, mobile number, date of birth, and application
+reference records.
 
 ## Loading catalogue and order facts
 

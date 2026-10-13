@@ -9,5 +9,6 @@ COPY section-2-database/sql/01_star_schema.sql /docker-entrypoint-initdb.d/
 COPY section-2-database/sql/02_load_successful_members.sql /docker-entrypoint-initdb.d/
 COPY section-2-database/sql/03_analyst_queries.sql /docker-entrypoint-initdb.d/
 COPY section-2-database/sql/04_load_mock_sales_data.sql /docker-entrypoint-initdb.d/
+COPY section-2-database/sql/05_analytics_views.sql /docker-entrypoint-initdb.d/
 COPY section-1-pipeline/output/successful/successful_applications.csv /seed/successful_applications.csv
 COPY section-2-database/mock-data/ /mock-data/
