@@ -8,7 +8,7 @@ This repository contains the implementation, generated data, and design document
 | --- | --- | --- |
 | [Section 1: Membership application pipeline](section-1-pipeline/README.md) | Process hourly application batches, validate eligibility, and publish successful and unsuccessful records separately. | Implemented |
 | [Airflow Docker setup](airflow/README.md) | Orchestrate the Section 1 pipeline with an hourly Airflow DAG. | Implemented |
-| Section 2: Database | Model membership and sales transactions in PostgreSQL. | Planned |
+| [Section 2: Sales analytics database](section-2-database/README.md) | Load successful memberships and report sales through a PostgreSQL star schema. | Implemented |
 | Section 3: System design | Define database access controls and image-processing cloud architecture. | Planned |
 
 ## Setup

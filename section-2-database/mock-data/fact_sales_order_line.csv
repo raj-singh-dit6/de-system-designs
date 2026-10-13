@@ -1,0 +1,7 @@
+order_id,order_line_number,membership_id,item_name,manufacturer_name,order_status,ordered_at,quantity,unit_price,unit_weight_kg
+100001,1,Smith_c7677,Wireless Keyboard,Northstar Electronics,completed,2026-10-01T09:15:00+08:00,1,49.99,0.850
+100001,2,Smith_c7677,USB-C Hub,Northstar Electronics,completed,2026-10-01T09:15:00+08:00,1,34.50,0.180
+100002,1,DDS_04168,Stainless Water Bottle,Peak Outdoors,completed,2026-10-02T11:30:00+08:00,2,22.00,0.420
+100003,1,Estrada_0bf5b,Running Backpack,Peak Outdoors,processing,2026-10-03T14:45:00+08:00,1,75.00,0.650
+100004,1,Cline_825fb,Desk Lamp,Lumen Home,completed,2026-10-04T18:20:00+08:00,3,39.95,1.200
+100005,1,Williams_3e726,USB-C Hub,Northstar Electronics,cancelled,2026-10-05T10:00:00+08:00,1,34.50,0.180

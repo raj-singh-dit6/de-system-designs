@@ -1,0 +1,16 @@
+services:
+  analytics-db:
+    build:
+      context: ..
+      dockerfile: section-2-database/Dockerfile
+    environment:
+      POSTGRES_DB: ecommerce_analytics
+      POSTGRES_USER: ecommerce_owner
+      POSTGRES_PASSWORD: local_development_only
+    ports:
+      - "5434:5432"
+    volumes:
+      - section2_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  section2_postgres_data:
