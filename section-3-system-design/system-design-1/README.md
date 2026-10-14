@@ -1,4 +1,4 @@
-# Datawarehouse Governance Strategy
+# SYSTEM DESIGN 1 : Datawarehouse Governance Strategy
 
 This document accompanies [design_1.html](design_1.html), a two-slide proposal
 for governing application access to the data warehouse.

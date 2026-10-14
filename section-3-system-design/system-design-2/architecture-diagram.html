@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Image Processing Platform | AWS Architecture</title>
+    <style>
+      :root { --ink:#152943; --muted:#5f728b; --line:#cbd7e5; --aws:#ff9900; --blue:#2275d7; --green:#16825d; --purple:#7755c7; --red:#b5473c; --canvas:#f5f8fc; }
+      * { box-sizing:border-box; }
+      body { margin:0; background:var(--canvas); color:var(--ink); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+      main { width:min(1600px,100%); min-height:1000px; margin:auto; padding:42px 56px; background:radial-gradient(circle at 96% 3%,#dcebff 0,transparent 25%),radial-gradient(circle at 5% 92%,#e0f5ec 0,transparent 24%),var(--canvas); }
+      header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; }
+      .eyebrow { color:#1766bf; font-size:13px; font-weight:750; letter-spacing:.12em; text-transform:uppercase; }
+      h1 { margin:7px 0; font-size:35px; letter-spacing:-.035em; }
+      .subtitle { margin:0; color:var(--muted); font-size:16px; }
+      .badge { padding:9px 13px; border:1px solid #f4c77e; border-radius:999px; background:#fff6e7; color:#945900; font-size:12px; font-weight:750; }
+      .legend { display:flex; gap:17px; margin:0 0 14px; color:var(--muted); font-size:11px; }
+      .legend span::before { display:inline-block; width:9px; height:9px; margin-right:5px; border-radius:50%; content:""; }
+      .l-ingest::before { background:var(--blue); } .l-process::before { background:var(--purple); } .l-store::before { background:var(--green); } .l-control::before { background:var(--red); }
+      svg { width:100%; height:auto; min-height:690px; border:1px solid var(--line); border-radius:18px; background:rgba(255,255,255,.82); box-shadow:0 12px 28px rgb(37 70 109 / 7%); }
+      .zone { fill:#f8fbff; stroke:#c8d9ed; stroke-width:1.4; stroke-dasharray:6 5; } .private { fill:#faf8ff; stroke:#d6caef; stroke-width:1.4; stroke-dasharray:6 5; }
+      .box { fill:#fff; stroke:#b9cadc; stroke-width:1.3; rx:11; } .ingest { stroke:#7aaee9; } .process { stroke:#b9a4e3; } .store { stroke:#79c6aa; } .control { stroke:#e5aaa1; }
+      .title { fill:#152943; font-size:15px; font-weight:750; } .service-title { fill:#152943; font-size:13px; font-weight:750; } .small { fill:#566a83; font-size:11px; } .zone-title { fill:#497198; font-size:12px; font-weight:750; letter-spacing:.06em; } .arrow { stroke:#ff9900; stroke-width:2; fill:none; marker-end:url(#arrow); } .dashed { stroke-dasharray:6 5; } .control-link { stroke:#b5473c; stroke-width:1.5; fill:none; stroke-dasharray:5 5; } .label { fill:#8c5b00; font-size:10px; font-weight:650; }
+      .callout { fill:#eff7f4; stroke:#a3d6c1; stroke-width:1; rx:8; } .callout-text { fill:#176047; font-size:10px; font-weight:650; }
+      .footer { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:15px; }
+      .pillar { padding:11px 13px; border:1px solid var(--line); border-radius:10px; background:#fff; color:#4f627a; font-size:11px; line-height:1.4; } .pillar strong { display:block; margin-bottom:3px; color:var(--ink); font-size:12px; }
+      @media print { @page { size:16in 10in; margin:0; } main { width:16in; min-height:10in; padding:.42in .55in; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <h1>Image-processing platform</h1>
+        </div>
+      </header>
+
+      <svg viewBox="0 0 1560 950" role="img" aria-label="Image-processing platform architecture">
+        <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#ff9900" /></marker></defs>
+        <rect class="zone" x="28" y="40" width="1500" height="830" rx="17" />
+        <image href="assets/aws-icons/AWS-Account_32.svg" x="49" y="48" width="20" height="20" /><text class="zone-title" x="76" y="64">AWS ACCOUNT</text>
+        <image href="assets/aws-icons/Virtual-private-cloud-VPC_32.svg" x="223" y="48" width="20" height="20" /><text class="zone-title" x="250" y="64">PRODUCTION VPC · REGIONAL, MULTI-AZ PLATFORM</text>
+        <rect class="private" x="500" y="215" width="730" height="400" rx="15" />
+        <image href="assets/aws-icons/Private-subnet_32.svg" x="520" y="223" width="20" height="20" /><text class="zone-title" x="547" y="240">PRIVATE WORKLOAD CONNECTIVITY · NO PUBLIC WORKLOAD IP ADDRESSES</text>
+
+        <rect class="box ingest" x="62" y="115" width="200" height="77" /><text class="title" x="83" y="145">Web application</text><text class="small" x="83" y="165">Users upload via HTTPS API</text>
+        <rect class="box ingest" x="62" y="295" width="200" height="77" /><text class="title" x="83" y="325">Kafka web application</text><text class="small" x="83" y="345">Engineer-managed image stream</text>
+        <rect class="box ingest" x="292" y="115" width="200" height="77" /><image href="assets/aws-icons/Arch_Amazon-CloudFront_64.svg" x="308" y="130" width="28" height="28" /><image href="assets/aws-icons/Arch_AWS-WAF_64.svg" x="308" y="159" width="28" height="28" /><text class="title" x="343" y="145">CloudFront + WAF</text><text class="small" x="343" y="165">TLS, WAF rules, rate limits</text>
+        <rect class="box ingest" x="292" y="295" width="200" height="77" /><image href="assets/aws-icons/Arch_Amazon-Managed-Streaming-for-Apache-Kafka_64.svg" x="308" y="316" width="31" height="31" /><text class="title" x="347" y="325">Amazon MSK</text><text class="small" x="347" y="345">Raw image-upload topic</text>
+        <rect class="box ingest" x="522" y="115" width="200" height="77" /><image href="assets/aws-icons/Arch_Amazon-API-Gateway_64.svg" x="538" y="138" width="32" height="32" /><text class="title" x="577" y="145">API Gateway</text><text class="small" x="577" y="165">Authorizes upload requests</text>
+        <rect class="box process" x="522" y="295" width="200" height="77" /><image href="assets/aws-icons/Arch_Amazon-Elastic-Container-Service_64.svg" x="538" y="316" width="31" height="31" /><text class="service-title" x="577" y="323">KafkaStreams</text><text class="service-title" x="577" y="338">Handler</text><text class="small" x="577" y="356">ECS · MSK consumer → S3</text>
+        <rect class="box ingest" x="752" y="115" width="210" height="77" /><image href="assets/aws-icons/Arch_Amazon-Elastic-Container-Service_64.svg" x="768" y="138" width="32" height="32" /><text class="service-title" x="807" y="143">ImageUploader</text><text class="service-title" x="807" y="158">Service</text><text class="small" x="807" y="177">ECS · FastAPI image upload</text>
+        <rect class="box store" x="992" y="115" width="200" height="77" /><image href="assets/aws-icons/Arch_Amazon-Simple-Storage-Service_64.svg" x="1008" y="138" width="32" height="32" /><text class="title" x="1047" y="145">S3 ingress bucket</text><text class="small" x="1047" y="165">Raw image + event object</text>
+
+        <rect class="box process" x="752" y="405" width="210" height="77" /><image href="assets/aws-icons/Arch_Amazon-EventBridge_64.svg" x="768" y="421" width="28" height="28" /><image href="assets/aws-icons/Arch_Amazon-Simple-Queue-Service_64.svg" x="768" y="449" width="28" height="28" /><text class="title" x="804" y="435">EventBridge + SQS</text><text class="small" x="804" y="455">Buffer, retries, DLQ</text>
+        <rect class="box process" x="752" y="515" width="210" height="77" /><image href="assets/aws-icons/Arch_AWS-Lambda_64.svg" x="768" y="538" width="32" height="32" /><text class="title" x="807" y="545">Lambda dispatcher</text><text class="small" x="807" y="565">Submits idempotent jobs</text>
+        <rect class="box process" x="992" y="515" width="220" height="77" /><image href="assets/aws-icons/Arch_Amazon-Elastic-Container-Service_64.svg" x="1008" y="538" width="32" height="32" /><text class="service-title" x="1047" y="543">ImageProcessing</text><text class="service-title" x="1047" y="558">TaskService</text><text class="small" x="1047" y="577">ECS · FastAPI processor</text>
+        <rect class="box process" x="1240" y="215" width="250" height="77" /><image href="assets/aws-icons/Arch_Amazon-Elastic-Container-Registry_64.svg" x="1256" y="238" width="32" height="32" /><text class="title" x="1295" y="245">ECR image repository</text><text class="small" x="1295" y="265">Versioned ECS container images</text>
+        <rect class="box process" x="1240" y="515" width="250" height="77" /><image href="assets/aws-icons/Arch_AWS-Glue_64.svg" x="1256" y="537" width="32" height="32" /><text class="title" x="1295" y="545">Glue ETL · hourly</text><text class="small" x="1295" y="565">Validate, dedupe, partition</text>
+
+        <rect class="box store" x="992" y="635" width="220" height="92" /><image href="assets/aws-icons/Arch_Amazon-Simple-Storage-Service_64.svg" x="1008" y="657" width="32" height="32" /><text class="title" x="1047" y="665">S3 metadata staging</text><text class="small" x="1047" y="684">Per-image JSON records</text><text class="small" x="1047" y="699">Seven-day retention</text>
+        <rect class="box store" x="752" y="650" width="210" height="77" /><image href="assets/aws-icons/Arch_Amazon-DynamoDB_64.svg" x="768" y="673" width="32" height="32" /><text class="title" x="807" y="680">DynamoDB metadata</text><text class="small" x="807" y="700">Status, trace, TTL</text>
+        <rect class="box store" x="1240" y="635" width="250" height="92" /><image href="assets/aws-icons/Arch_Amazon-Simple-Storage-Service_64.svg" x="1256" y="657" width="32" height="32" /><text class="title" x="1295" y="665">S3 warehouse bucket</text><text class="small" x="1295" y="684">Curated Parquet · hourly partitions</text><text class="small" x="1295" y="699">Rolling seven-day snapshots</text>
+        <rect class="box store" x="1240" y="760" width="250" height="92" /><image href="assets/aws-icons/Arch_AWS-Glue_64.svg" x="1256" y="772" width="28" height="28" /><image href="assets/aws-icons/Arch_Amazon-Athena_64.svg" x="1256" y="805" width="28" height="28" /><text class="title" x="1293" y="788">Glue table + Athena</text><text class="title" x="1293" y="805">QuickSight BI</text><text class="small" x="1293" y="824">Hourly partitions · 7-day window</text><text class="small" x="1293" y="839">Images remain in ingress S3</text>
+
+        <path class="arrow" d="M262 153 H292" /><path class="arrow" d="M492 153 H522" /><path class="arrow" d="M722 153 H752" /><path class="arrow" d="M962 153 H992" />
+        <path class="arrow" d="M262 333 H292" /><path class="arrow" d="M492 333 H522" /><path class="arrow" d="M722 333 C835 333,895 240,992 180" />
+        <path class="arrow" d="M1092 192 V300 C1092 360,1020 443,962 443" /><text class="label" x="1005" y="300">Object-created event</text>
+        <path class="arrow" d="M857 482 V515" /><text class="label" x="870" y="503">validated event</text><path class="arrow" d="M962 553 H992" /><text class="label" x="966" y="536">process image</text>
+        <path class="arrow dashed" d="M1240 253 C1140 253,1040 205,962 176" /><text class="label" x="1088" y="218">pull image</text>
+        <path class="arrow dashed" d="M1240 275 H740 V333 H722" /><text class="label" x="930" y="266">pull image</text>
+        <path class="arrow dashed" d="M1240 270 H1222 V515 H1102" /><text class="label" x="1120" y="500">pull image</text>
+        <path class="arrow" d="M1102 592 V635" /><path class="arrow" d="M992 592 C940 615,895 635,857 650" />
+        <path class="arrow" d="M1212 681 C1230 650,1230 590,1240 553" /><text class="label" x="1218" y="620">hourly ETL</text>
+        <path class="arrow" d="M1365 592 V635" /><text class="label" x="1378" y="620">curated Parquet</text>
+        <path class="arrow" d="M1365 727 V760" /><text class="label" x="1378" y="748">catalog + query</text>
+
+        <rect class="callout" x="1222" y="116" width="270" height="77" /><text class="callout-text" x="1239" y="143">Seven-day retention enforcement</text><text class="small" x="1239" y="162">Ingress, staging + warehouse S3: 7 days</text><text class="small" x="1239" y="178">DynamoDB TTL + BI access window: 7 days</text>
+        <rect class="box control" x="62" y="405" width="252" height="77" /><image href="assets/aws-icons/Arch_AWS-Key-Management-Service_64.svg" x="80" y="423" width="25" height="25" /><image href="assets/aws-icons/Arch_AWS-Secrets-Manager_64.svg" x="80" y="450" width="25" height="25" /><text class="title" x="114" y="431">Data protection</text><text class="small" x="114" y="450">At rest: SSE-KMS / CMKs</text><text class="small" x="114" y="466">In transit: TLS 1.2+ only</text>
+        <rect class="box control" x="62" y="650" width="252" height="77" /><image href="assets/aws-icons/Arch_AWS-CloudTrail_64.svg" x="80" y="670" width="24" height="24" /><image href="assets/aws-icons/Arch_Amazon-GuardDuty_64.svg" x="80" y="695" width="24" height="24" /><text class="title" x="114" y="680">Security &amp; operations plane</text><text class="small" x="114" y="699">IAM · private endpoints · secrets rotation</text><text class="small" x="114" y="714">CloudTrail data events · Config · GuardDuty</text>
+      </svg>
+
+    </main>
+  </body>
+</html>
