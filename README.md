@@ -9,7 +9,7 @@ This repository contains the implementation, generated data, and design document
 | [Section 1: Membership application pipeline](section-1-pipeline/README.md) | Process hourly application batches, validate eligibility, and publish successful and unsuccessful records separately. | Implemented |
 | [Airflow Docker setup](airflow/README.md) | Orchestrate the Section 1 pipeline with an hourly Airflow DAG. | Implemented |
 | [Section 2: Sales analytics database](section-2-database/README.md) | Load successful memberships and report sales through a PostgreSQL star schema. | Implemented |
-| Section 3: System design | Define database access controls and image-processing cloud architecture. | Planned |
+| [Section 3: System designs](section-3-system-design/) | Define database access controls and image-processing cloud architecture. | Implemented |
 
 ## Setup
 
@@ -21,7 +21,9 @@ cd de-system-designs
 make test
 ```
 
-## Usage
+## Section 1: Membership application pipeline
+
+### Run locally
 
 Run the membership pipeline locally:
 
@@ -36,7 +38,7 @@ The pipeline reads all CSV files in `section-1-pipeline/input/` and writes conso
 
 See the [Section 1 README](section-1-pipeline/README.md) for validation rules, output schema, and assumptions.
 
-## Airflow scheduling
+### Airflow scheduling
 
 The local Airflow 3.3.2 setup runs the `membership_application_pipeline` DAG hourly. The DAG executes the same `run_pipeline.sh` script used by `make run-pipeline`, so its results are written to the normal Section 1 output folders.
 
@@ -49,7 +51,7 @@ Open <http://localhost:8080> to view or manually trigger the DAG. The local setu
 
 See the [Airflow README](airflow/README.md) for prerequisites, Airflow 3 upgrade notes, and lifecycle details.
 
-## Architecture
+### Pipeline architecture
 
 ```text
 Hourly CSV batches --> Airflow DAG --> Python validation and transformation --> Successful output CSV
@@ -58,6 +60,31 @@ Hourly CSV batches --> Airflow DAG --> Python validation and transformation --> 
 ```
 
 The pipeline records validation failures for each rejected row, supporting downstream consumers and data-quality investigation.
+
+## Section 2: Sales analytics database
+
+Section 2 provides a self-initialising PostgreSQL 16 sales analytics database.
+It loads successful membership applications from Section 1 into a reporting
+star schema and includes sample product and sales-order data for local review.
+
+```bash
+docker compose -f section-2-database/docker-compose.yml up --build -d
+```
+
+The design includes dimensions for members, products, and order statuses, plus
+a sales-order-line fact table. It also supplies the requested top-spending and
+most-frequently-purchased-item SQL queries. See the
+[Section 2 README](section-2-database/README.md) for the data model, SQL
+scripts, database access, and reporting queries.
+
+## Section 3: System designs
+
+Section 3 contains two presentation-based architecture designs:
+
+- [System design 1: Datawarehouse Governance Strategy](section-3-system-design/system-design-1/README.md) defines least-privilege PostgreSQL access for analytics, sales, and logistics applications.
+- [System design 2: Cloud image-processing platform](section-3-system-design/system-design-2/README.md) defines an AWS architecture for API and Kafka ingestion, ECS image processing, seven-day retention, and BI analytics.
+
+Each design folder includes its supporting documentation and PowerPoint deck.
 
 ## Decision notes
 
