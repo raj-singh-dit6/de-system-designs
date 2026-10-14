@@ -5,8 +5,8 @@ engineer-managed Kafka stream, process them with existing containerized code,
 retain image data for exactly seven days, and make current data available to
 analysts.
 
-Open [architecture-diagram.html](architecture-diagram.html) in a browser for
-the end-to-end architecture diagram.
+Open [system-design-2.pptx](system-design-2.pptx) in PowerPoint, Keynote, or a
+compatible presentation application for the end-to-end architecture diagram.
 
 ## Assumptions
 

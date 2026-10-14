@@ -1,7 +1,7 @@
 # SYSTEM DESIGN 1 : Datawarehouse Governance Strategy
 
-This document accompanies [design_1.html](design_1.html), a two-slide proposal
-for governing application access to the data warehouse.
+This document accompanies [system-design-1.pptx](system-design-1.pptx), a
+two-slide proposal for governing application access to the data warehouse.
 
 ## Slide 1: Governance model
 
@@ -44,5 +44,5 @@ business actions.
 
 ## View the slides
 
-Open [design_1.html](design_1.html) in a browser. It is designed as a
-two-slide, print-friendly HTML deck.
+Open [system-design-1.pptx](system-design-1.pptx) in PowerPoint, Keynote, or a
+compatible presentation application. The deck contains two slides.
